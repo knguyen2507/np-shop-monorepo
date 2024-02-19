@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@np-shop-monorepo/service/casl": ["libs/service/casl/src/index.ts"],
+      "@np-shop-monorepo/service/cloudinary": ["libs/service/cloudinary/src/index.ts"],
+      "@np-shop-monorepo/template/environment": ["libs/template/environment/src/index.ts"],
+      "@np-shop-monorepo/service/guard": ["libs/service/guard/src/index.ts"],
+      "@np-shop-monorepo/service/prisma": ["libs/service/prisma/src/index.ts"],
+      "@np-shop-monorepo/service/rabbitmq": ["libs/service/rabbitmq/src/index.ts"],
+      "@np-shop-monorepo/service/redis": ["libs/service/redis/src/index.ts"],
+      "@np-shop-monorepo/template/shared": ["libs/template/shared/src/index.ts"],
+      "@np-shop-monorepo/template/store": ["libs/template/store/src/index.ts"],
+      "@np-shop-monorepo/service/utility": ["libs/service/utility/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
