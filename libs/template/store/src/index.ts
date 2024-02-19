@@ -1,1 +1,2 @@
-export * from './lib/store/store.component';
+export * from './lib/index.store';
+export * from './lib/store.module';

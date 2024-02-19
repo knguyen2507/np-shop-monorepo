@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../../../../node_modules/@prisma/client/transaction"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Brands {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  messageId String
+  data      Data[]
+
+  @@map("brands")
+}
+
+type Data {
+  name   String
+  action String
+  isMain Boolean
+}

@@ -13,14 +13,6 @@
             "prefix": "npShopMonorepo",
             "style": "camelCase"
           }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "np-shop-monorepo",
-            "style": "kebab-case"
-          }
         ]
       }
     },

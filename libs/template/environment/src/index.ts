@@ -1,1 +1,1 @@
-export * from './lib/environment/environment.component';
+export * from './lib/environment';

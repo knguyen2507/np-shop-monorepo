@@ -1,0 +1,180 @@
+<div class="dialog">
+  <div class="header">
+    <div class="title">Tạo mới sản phẩm</div>
+    <div class="btnGroup">
+      <button mat-flat-button color="primary" (click)="submit()">Tạo</button>
+      <button mat-dialog-close mat-stroked-button color="warn" (click)="reset()">Thoát</button>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <form class="detailForm" fxLayout="column" fxLayoutGap="24px" [formGroup]="productForm">
+      <!-- Form Shop Info -->
+      <div class="formShop">
+        <div class="shopHeader">
+          <h1>Thông Tin Cửa Hàng</h1>
+          <div class="btnGroup">
+            <button
+              mat-icon-button
+              type="button"
+              color="dark"
+              class="small-icon-button"
+              matTooltip="Thêm mô tả"
+              (click)="add_shop()"
+            >
+              <mat-icon>playlist_add</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div formArrayName="shop">
+          <div *ngFor="let shop of this.shopData; let i = index" [formGroupName]="i">
+            <div fxLayout="row wrap" fxLayoutGap="grid">
+              <div fxFlex="25%" fxFlex.lg="25%" fxFlex.sm="100%" fxFlex.lt-sm="100%" class="fieldWrapper">
+                <label class="label" for="id">Cửa Hàng</label>
+                <ng-select
+                  class="custom"
+                  [items]="shopSource"
+                  bindLabel="label"
+                  bindValue="id"
+                  [appendTo]="'body'"
+                  placeholder="Chọn cửa hàng"
+                  [(ngModel)]="this.shopData[i].id"
+                  (change)="shopChange($event, i)"
+                  formControlName="id"
+                >
+                </ng-select>
+              </div>
+              <div fxFlex="50%" fxFlex.lg="50%" fxFlex.sm="100%" fxFlex.lt-sm="100%" class="fieldWrapper">
+                <label class="label" for="id">Địa Chỉ</label>
+                <div class="inputWrapper">
+                  <input class="input isDisabled" type="text" [value]="this.shopData[i].address" disabled />
+                </div>
+              </div>
+              <div fxFlex="25%" fxFlex.lg="25%" fxFlex.sm="100%" fxFlex.lt-sm="100%" class="fieldWrapper">
+                <label class="label" for="id">Tồn Kho</label>
+                <div class="inputWrapper">
+                  <input class="input" type="text" (keyup)="onKeyQty(i, $event)" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Form Meta data -->
+      <div class="formData">
+        <h1>Thông Tin Sản Phẩm</h1>
+        <div fxLayout="row wrap" fxLayoutGap="grid">
+          <div fxFlex="33%" fxFlex.lg="33%" fxFlex.sm="100%" fxFlex.lt-sm="100%" class="fieldWrapper">
+            <label class="label" for="id">ID</label>
+            <div class="inputWrapper">
+              <input class="input isDisabled" type="text" id="id" [value]="" disabled />
+            </div>
+          </div>
+          <div fxFlex="33%" fxFlex.lg="33%" fxFlex.sm="100%" fxFlex.lt-sm="100%" class="fieldWrapper">
+            <label class="label" for="id">Code</label>
+            <div class="inputWrapper">
+              <input class="input" type="text" id="productCode" formControlName="productCode" />
+            </div>
+          </div>
+          <div fxFlex="33%" fxFlex.lg="33%" fxFlex.sm="100%" fxFlex.lt-sm="100%" class="fieldWrapper">
+            <label class="label" for="id">Ngày Tạo</label>
+            <div class="inputWrapper">
+              <input class="input isDisabled" type="text" id="createdAt" [value]="" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Form Detail -->
+      <div fxLayout="row" fxLayout.sm="column" fxLayout.lt-sm="column" fxLayoutGap="24px">
+        <div fxFlex="50%" fxFlex.lg="50%" fxFlex.sm="100%" fxFlex.lt-sm="100%">
+          <div class="generalForm">
+            <h1>Thông Tin Chi Tiết</h1>
+            <div class="fieldWrapper">
+              <label class="label" for="id">Tên Sản Phẩm</label>
+              <div class="inputWrapper">
+                <input class="input" type="text" id="name" formControlName="name" />
+              </div>
+            </div>
+            <div class="fieldWrapper">
+              <label class="label" for="id">Giá Bán</label>
+              <div class="inputWrapper">
+                <input class="input" type="text" id="price" formControlName="price" />
+              </div>
+            </div>
+            <div class="fieldWrapper">
+              <label class="label" for="id">Nhãn Hàng</label>
+              <ng-select
+                class="custom"
+                [items]="brandSource"
+                bindLabel="label"
+                bindValue="id"
+                formControlName="brand"
+                [appendTo]="'body'"
+                placeholder="Chọn nhãn hàng"
+              >
+              </ng-select>
+            </div>
+            <div class="fieldWrapper">
+              <label class="label" for="id">Danh Mục</label>
+              <ng-select
+                class="custom"
+                [items]="categorySource"
+                bindLabel="label"
+                bindValue="id"
+                formControlName="category"
+                [appendTo]="'body'"
+                placeholder="Chọn danh mục"
+              >
+              </ng-select>
+            </div>
+          </div>
+          <div class="imgForm">
+            <app-upload-album
+              [title]="'Hình ảnh sản phẩm'"
+              [required]="true"
+              [productImages]="this.images"
+              (avt)="this.getAvatar($event)"
+              (listImages)="this.getListImages($event)"
+            ></app-upload-album>
+          </div>
+        </div>
+        <div fxFlex="50%" fxFlex.lg="50%" fxFlex.sm="100%" fxFlex.lt-sm="100%">
+          <div class="descriptionForm">
+            <div class="descriptionHeader">
+              <h1>Mô Tả</h1>
+              <div class="btnGroup">
+                <button
+                  mat-icon-button
+                  type="button"
+                  color="dark"
+                  class="small-icon-button"
+                  matTooltip="Thêm mô tả"
+                  (click)="add_des()"
+                >
+                  <mat-icon>playlist_add</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div *ngFor="let des of this.description; let i = index">
+              <div class="fieldWrapper" fxLayout="row" fxLayout.lt-md="column">
+                <div class="inputKeyWrapper" fxFlex="25">
+                  <input class="input" type="text" id="name" [value]="des.key" placeholder="Mô Tả" />
+                </div>
+                <div class="inputValueWrapper" fxFlex="75">
+                  <input
+                    class="input"
+                    type="text"
+                    id="name"
+                    [value]="des.value"
+                    (keyup)="onKey(i, $event)"
+                    placeholder="Chi Tiết"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+</div>

@@ -16,11 +16,8 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/template/admin-template/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/template/admin-template/src/favicon.ico",
-          "apps/template/admin-template/src/assets"
-        ],
-        "styles": ["apps/template/admin-template/src/styles.scss"],
+        "assets": ["apps/template/admin-template/src/favicon.ico", "apps/template/admin-template/src/assets"],
+        "styles": ["apps/template/admin-template/src/styles.scss", "@angular/material/prebuilt-themes/indigo-pink.css"],
         "scripts": []
       },
       "configurations": {
@@ -28,8 +25,8 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
             },
             {
               "type": "anyComponentStyle",
@@ -37,7 +34,13 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "libs/template/environment/src/lib/environment.ts",
+              "with": "libs/template/environment/src/lib/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,
@@ -45,7 +48,13 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "libs/template/environment/src/lib/environment.ts",
+              "with": "libs/template/environment/src/lib/environment.dev.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"

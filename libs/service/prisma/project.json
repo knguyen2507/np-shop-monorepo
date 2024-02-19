@@ -4,16 +4,20 @@
   "sourceRoot": "libs/service/prisma/src",
   "projectType": "library",
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "generate-all": {
+      "executor": "nx:run-commands",
       "options": {
-        "jestConfig": "libs/service/prisma/jest.config.ts"
+        "commands": [
+          "prisma generate --schema=libs/service/prisma/src/lib/auth/schema/schema.prisma",
+          "prisma generate --schema=libs/service/prisma/src/lib/shop/schema/schema.prisma"
+        ]
       }
+    },
+    "generate-auth": {
+      "command": "prisma generate --schema=libs/service/prisma/src/lib/auth/schema/schema.prisma"
+    },
+    "generate-shop": {
+      "command": "prisma generate --schema=libs/service/prisma/src/lib/shop/schema/schema.prisma"
     }
   },
   "tags": []

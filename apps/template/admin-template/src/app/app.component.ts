@@ -1,14 +1,25 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
-  standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
-  selector: 'np-shop-monorepo-root',
+  selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'admin-template';
+export class AppComponent implements OnInit {
+  showComponent = true;
+
+  constructor(private router: Router) {
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.url === '/dang-nhap') {
+          this.showComponent = false;
+        }
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    return;
+  }
 }

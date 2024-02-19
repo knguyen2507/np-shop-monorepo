@@ -14,7 +14,6 @@
         "outputPath": "dist/apps/services/shop",
         "main": "apps/services/shop/src/main.ts",
         "tsConfig": "apps/services/shop/tsconfig.app.json",
-        "assets": ["apps/services/shop/src/assets"],
         "webpackConfig": "apps/services/shop/webpack.config.js"
       },
       "configurations": {
