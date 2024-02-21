@@ -1,16 +1,23 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Global, Inject, Injectable, Module } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { LoggerPrismaModule, LoggerPrismaService } from '@np-shop-monorepo/service/prisma';
 import { RedisModule } from '@np-shop-monorepo/service/redis';
 import * as bcrypt from 'bcrypt';
 import { ObjectId } from 'bson';
 import { Cache } from 'cache-manager';
 import { environment } from './const/environment';
 import { UserInterface } from './interface/user.interface';
+import { LogType } from './type';
 
 @Injectable()
 export class UtilityImplement {
-  constructor(private readonly jwtService: JwtService, @Inject(CACHE_MANAGER) private readonly redis: Cache) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    @Inject(CACHE_MANAGER)
+    private readonly redis: Cache,
+    private readonly prisma: LoggerPrismaService,
+  ) {}
 
   generateId() {
     return new ObjectId().toString();
@@ -83,11 +90,17 @@ export class UtilityImplement {
   async handleError<T>(promise: Promise<T>): Promise<[any, undefined] | (T | undefined)[]> {
     return promise.then((data) => [undefined, data]).catch((error) => [error, undefined]);
   }
+
+  async writeLog(log: LogType) {
+    await this.prisma.logs.create({
+      data: log,
+    });
+  }
 }
 
 @Global()
 @Module({
-  imports: [JwtModule.register({}), RedisModule],
+  imports: [JwtModule.register({}), RedisModule, LoggerPrismaModule],
   providers: [UtilityImplement],
   exports: [UtilityImplement],
 })

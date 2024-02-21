@@ -1,12 +1,15 @@
-import { Inject, InternalServerErrorException } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CloudinaryService } from '@np-shop-monorepo/service/cloudinary';
+import { UtilityImplement } from '@np-shop-monorepo/service/utility';
+import { LogLevel } from '@prisma/client/logger';
+import moment from 'moment';
 import { DeleteProduct } from '.';
 import { ProductRepositoryImplement } from '../../../../infrastructure/repository';
 
 @CommandHandler(DeleteProduct)
 export class DeleteProductHandler implements ICommandHandler<DeleteProduct, void> {
-  constructor(private readonly cloudinaryService: CloudinaryService) {}
+  constructor(private readonly cloudinaryService: CloudinaryService, private readonly util: UtilityImplement) {}
   @Inject()
   private readonly product: ProductRepositoryImplement;
 
@@ -23,7 +26,17 @@ export class DeleteProductHandler implements ICommandHandler<DeleteProduct, void
         }
       }
     } catch (error) {
-      throw new InternalServerErrorException();
+      const log = {
+        id: this.util.generateId(),
+        messageId: command.messageId,
+        level: LogLevel.ERROR,
+        timeStamp: moment().toDate(),
+        eventName: `delete product`,
+        message: error,
+        data: command.data,
+      };
+      await this.util.writeLog(log);
+      throw new HttpException('Error Server!', HttpStatus.INTERNAL_SERVER_ERROR);
     }
     this.product.remove(ids);
   }

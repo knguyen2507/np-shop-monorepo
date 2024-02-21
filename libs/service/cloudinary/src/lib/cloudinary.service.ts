@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { FileUpload } from '@np-shop-monorepo/service/utility';
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
@@ -10,7 +10,7 @@ export class CloudinaryService {
     return new Promise<CloudinaryResponse>((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream((error, result) => {
         if (error) return reject(error);
-        if (!result) throw new InternalServerErrorException();
+        if (!result) throw new HttpException('Server Error!', HttpStatus.INTERNAL_SERVER_ERROR);
         resolve(result);
       });
 

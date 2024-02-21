@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../../../../node_modules/@prisma/client/logger"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Logs {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  messageId String
+  level     LogLevel
+  timeStamp DateTime
+  eventName String
+  message   String
+  data      Json
+
+  @@map("logs")
+}
+
+enum LogLevel {
+  LOG   @map("LOG")
+  ERROR @map("ERROR")
+}

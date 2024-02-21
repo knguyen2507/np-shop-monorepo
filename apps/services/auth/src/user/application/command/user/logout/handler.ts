@@ -1,6 +1,8 @@
-import { InternalServerErrorException } from '@nestjs/common';
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UtilityImplement } from '@np-shop-monorepo/service/utility';
+import { LogLevel } from '@prisma/client/logger';
+import moment from 'moment';
 import { Logout } from '.';
 
 @CommandHandler(Logout)
@@ -15,7 +17,17 @@ export class LogoutHandler implements ICommandHandler<Logout, any> {
         this.util.setBlackListToken(`blacklist:${token}`, token),
       ]);
     } catch (error) {
-      throw new InternalServerErrorException(`Error:::`, error);
+      const log = {
+        id: this.util.generateId(),
+        messageId: command.messageId,
+        level: LogLevel.ERROR,
+        timeStamp: moment().toDate(),
+        eventName: `logout`,
+        message: error,
+        data: command.data,
+      };
+      await this.util.writeLog(log);
+      throw new HttpException('Error Server!', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

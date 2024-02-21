@@ -1,4 +1,4 @@
-import { BadRequestException, Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserInterface, UtilityImplement } from '@np-shop-monorepo/service/utility';
 import { Login } from '.';
@@ -46,6 +46,6 @@ export class LoginHandler implements ICommandHandler<Login, any> {
         };
       }
     }
-    throw new BadRequestException(`Wrong username or password`);
+    throw new HttpException('Sai tài khoản hoặc mật khẩu', HttpStatus.BAD_REQUEST);
   }
 }

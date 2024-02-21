@@ -1,4 +1,4 @@
-import { Inject, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { AuthPrismaService } from '@np-shop-monorepo/service/prisma';
 import { UserInterface, UtilityImplement } from '@np-shop-monorepo/service/utility';
 import { plainToClass, plainToInstance } from 'class-transformer';
@@ -159,7 +159,7 @@ export class UserQueryImplement implements UserQuery {
     const { token, user } = query;
     // check token in black list
     const BlackListed = await this.util.getRedisKey(`blacklist:${token}`);
-    if (BlackListed) throw new UnauthorizedException('Token Expired');
+    if (BlackListed) throw new HttpException('Token Expired', HttpStatus.UNAUTHORIZED);
 
     const payload = this.util.verifyAccessToken(token); // verify access token
     let accessToken = '';
@@ -170,14 +170,14 @@ export class UserQueryImplement implements UserQuery {
     } else {
       // check refresh token in db
       refreshToken = await this.util.getRedisKey(token);
-      if (!refreshToken) throw new UnauthorizedException('Token Expired');
+      if (!refreshToken) throw new HttpException('Token Expired', HttpStatus.UNAUTHORIZED);
 
       // verify refresh token
       const data = this.util.verifyRefreshToken(refreshToken);
       if (!data) {
         // access token, refresh token invalid
         await this.util.deleteRefreshToken(token);
-        throw new UnauthorizedException('Token Expired');
+        throw new HttpException('Token Expired', HttpStatus.UNAUTHORIZED);
       }
 
       // sign new access token

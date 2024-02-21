@@ -1,4 +1,4 @@
-import { BadRequestException, Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UtilityImplement } from '@np-shop-monorepo/service/utility';
 import { UpdatePassword } from '.';
@@ -22,6 +22,6 @@ export class UpdatePasswordHandler implements ICommandHandler<UpdatePassword, an
       await this.user.update(user);
       return `password has been changed`;
     }
-    throw new BadRequestException(`Wrong password`);
+    throw new HttpException('Sai tài khoản hoặc mật khẩu', HttpStatus.BAD_REQUEST);
   }
 }

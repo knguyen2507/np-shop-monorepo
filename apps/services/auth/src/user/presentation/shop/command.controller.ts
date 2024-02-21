@@ -13,6 +13,8 @@ import {
   pathPrefixCommandShop,
   pathPrefixShop,
 } from '@np-shop-monorepo/service/utility';
+import { LogLevel } from '@prisma/client/logger';
+import moment from 'moment';
 import { CreateShop } from '../../application/command/shop/create';
 import { ShopPermission } from '../../application/command/shop/permission';
 import { UpdateShop } from '../../application/command/shop/update';
@@ -54,7 +56,16 @@ export class ShopCommandController {
       const query = new ShopPermission(msg);
       return await this.commandBus.execute(query);
     } catch (error) {
-      console.error(error);
+      const log = {
+        id: this.util.generateId(),
+        messageId: msg.messageId,
+        level: LogLevel.ERROR,
+        timeStamp: moment().toDate(),
+        eventName: `login`,
+        message: error,
+        data: msg.data,
+      };
+      await this.util.writeLog(log);
       return new Nack();
     }
   }
