@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: np-services-k8s
+  name: msx-shop
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3020
+      targetPort: 3020
+  selector:
+    app: msx-shop
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: np-services-k8s
+  name: msx-shop-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msx-shop
+  template:
+    metadata:
+      labels:
+        app: msx-shop
+    spec:
+      imagePullSecrets:
+        - name: registry-secret
+      containers:
+        - name: msx-shop
+          image: knguyen2507/msx-shop:latest
+          ports:
+            - containerPort: 3020
+          envFrom:
+            - secretRef:
+                name: np-services-kubernetes-secret
+          env:
+            - name: PORT
+              value: '3020'

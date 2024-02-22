@@ -10,7 +10,8 @@ import { UserModel } from './user.model';
 export class UserService {
   constructor(private httpService: HttpService) {}
 
-  private apiUrl = `${environment.urlApi}/msx-auth`;
+  // private apiUrl = `${environment.urlApi}/msx-auth`;
+  private apiUrl = environment.urlApiAuth;
 
   findUserList(pagi?: { offset: number; limit: number }) {
     return this.httpService.getAdmin<FindMany<UserModel>>(`${this.apiUrl}/user/find`, { ...pagi });

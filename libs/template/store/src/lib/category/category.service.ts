@@ -9,7 +9,8 @@ import { CategoryModel } from './category.model';
 export class CategoryService {
   constructor(private httpService: HttpService) {}
 
-  private apiUrl = `${environment.urlApi}/msx-shop`;
+  // private apiUrl = `${environment.urlApi}/msx-shop`;
+  private apiUrl = environment.urlApiShop;
 
   findCategoryList() {
     return this.httpService.get<FindMany<CategoryModel>>(`${this.apiUrl}/category/find`);

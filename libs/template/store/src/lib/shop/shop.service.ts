@@ -9,7 +9,8 @@ import { ShopModel } from './shop.model';
 export class ShopService {
   constructor(private httpService: HttpService) {}
 
-  private apiUrl = `${environment.urlApi}/msx-auth`;
+  // private apiUrl = `${environment.urlApi}/msx-auth`;
+  private apiUrl = environment.urlApiAuth;
 
   findShopList() {
     return this.httpService.getAdmin<FindMany<ShopModel>>(`${this.apiUrl}/shop/find`);

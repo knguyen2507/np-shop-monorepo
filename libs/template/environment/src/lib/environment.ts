@@ -3,6 +3,8 @@ export const environment = {
   mode: '',
   adminHost: '',
   shopHost: '',
-  urlApi: '',
+  // urlApi: '',
+  urlApiAuth: '',
+  urlApiShop: '',
   guard: false,
 };

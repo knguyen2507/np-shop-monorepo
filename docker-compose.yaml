@@ -29,10 +29,7 @@ services:
       - CLOUDINARY_CLOUDNAME=dditi9hky
       - CLOUDINARY_APIKEY=929887948555176
       - CLOUDINARY_APISECRET=EVOVJ-BCbhRibM6VkCryAcXoDTQ
-      - RMQ_USER=admin
-      - RMQ_PASSWORD=abc12345
-      - RMQ_HOST=store-rabbitmq
-      - RMQ_PORT=5672
+      - RMQ_URL=amqp://admin:abc12345@store-rabbitmq:5672
     networks:
       - gateway-network
 
@@ -60,9 +57,6 @@ services:
       - CLOUDINARY_CLOUDNAME=dditi9hky
       - CLOUDINARY_APIKEY=929887948555176
       - CLOUDINARY_APISECRET=EVOVJ-BCbhRibM6VkCryAcXoDTQ
-      - RMQ_USER=admin
-      - RMQ_PASSWORD=abc12345
-      - RMQ_HOST=store-rabbitmq
-      - RMQ_PORT=5672
+      - RMQ_URL=amqp://admin:abc12345@store-rabbitmq:5672
     networks:
       - gateway-network

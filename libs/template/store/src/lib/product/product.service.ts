@@ -9,7 +9,8 @@ import { ProductDetailModel, ProductModel, ProductModelFindByAdmin, ShopModel } 
 export class ProductService {
   constructor(private httpService: HttpService) {}
 
-  private apiUrl = `${environment.urlApi}/msx-shop`;
+  // private apiUrl = `${environment.urlApi}/msx-shop`;
+  private apiUrl = environment.urlApiShop;
 
   findProductList(pagi?: { offset: number; limit: number }, searchName?: string) {
     let payload: any = pagi;

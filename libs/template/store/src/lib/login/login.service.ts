@@ -10,7 +10,8 @@ import { LoginModel } from './login.model';
 export class LoginService {
   constructor(private httpService: HttpService) {}
 
-  private apiUrl = `${environment.urlApi}/msx-auth`;
+  // private apiUrl = `${environment.urlApi}/msx-auth`;
+  private apiUrl = environment.urlApiAuth;
 
   login(loginInfo: Partial<LoginModel>): Observable<any> {
     return this.httpService.post<any>(`${this.apiUrl}/user/login`, { ...loginInfo }).pipe(

@@ -3,7 +3,9 @@ export const environment = {
   mode: 'production',
   adminHost: '',
   shopHost: '',
-  urlApi: '/api',
+  // urlApi: '/api',
+  urlApiAuth: '',
+  urlApiShop: '',
   // urlApi: 'http://35.221.104.157',
   guard: false,
 };
