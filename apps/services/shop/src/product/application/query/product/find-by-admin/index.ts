@@ -5,6 +5,7 @@ export class FindProductByAdmin extends BaseQuery {
     shopIds: string[];
     offset: number;
     limit: number;
+    searchModel?: string;
   };
 
   constructor(data: FindProductByAdmin) {

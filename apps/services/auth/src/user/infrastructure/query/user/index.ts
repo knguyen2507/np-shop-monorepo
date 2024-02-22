@@ -24,11 +24,24 @@ export class UserQueryImplement implements UserQuery {
   private readonly util: UtilityImplement;
 
   async find(query: FindUser): Promise<FindUserResult> {
-    const { offset, limit } = query.data;
+    const { offset, limit, searchModel } = query.data;
+    const conditions = [];
+    const search: { [key: string]: any } = searchModel ? JSON.parse(searchModel) : undefined;
+
+    if (search) {
+      for (const [prop, item] of Object.entries(search)) {
+        const obj = {};
+        const { value } = this.util.buildSearch(item);
+        obj[prop] = value;
+        conditions.push(obj);
+      }
+    }
+
     const [users, total] = await Promise.all([
       this.prisma.users.findMany({
         skip: Number(offset),
         take: Number(limit),
+        where: { AND: conditions },
         orderBy: [
           {
             created: 'desc',

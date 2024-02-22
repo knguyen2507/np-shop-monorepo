@@ -4,6 +4,7 @@ export class FindUser extends BaseQuery {
   data: {
     offset: number;
     limit: number;
+    searchModel?: string;
   };
 
   constructor(data: FindUser) {

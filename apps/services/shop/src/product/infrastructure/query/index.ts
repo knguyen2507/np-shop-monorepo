@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { ShopPrismaService } from '@np-shop-monorepo/service/prisma';
+import { UtilityImplement } from '@np-shop-monorepo/service/utility';
 import { plainToClass } from 'class-transformer';
 import { FindProductByCode } from '../../application/query/product/detail';
 import { FindProductByCodeResult } from '../../application/query/product/detail/result';
@@ -40,6 +41,8 @@ import { ProductQuery } from '../../domain/query';
 export class ProductQueryImplement implements ProductQuery {
   @Inject()
   private readonly prisma: ShopPrismaService;
+  @Inject()
+  private readonly util: UtilityImplement;
 
   async find(query: FindProduct): Promise<FindProductResult> {
     const { offset, limit, searchName } = query.data;
@@ -83,8 +86,35 @@ export class ProductQueryImplement implements ProductQuery {
   }
 
   async findByAdmin(query: FindProductByAdmin): Promise<FindProductByAdminResult> {
-    const { offset, limit, shopIds } = query.data;
-    const conditions = [{ shop: { some: { id: { in: shopIds } } } }];
+    const { offset, limit, shopIds, searchModel } = query.data;
+    const conditions = [];
+    const search: { [key: string]: any } = searchModel ? JSON.parse(searchModel) : undefined;
+    conditions.push({ shop: { some: { id: { in: shopIds } } } });
+
+    if (search) {
+      for (const [prop, item] of Object.entries(search)) {
+        const obj = {};
+        if (item.isCustom) {
+          if (prop === 'brand') {
+            const { value } = this.util.buildSearch(item);
+            conditions.push({ brand: { name: { contains: value.toLowerCase() } } });
+          }
+          if (prop === 'category') {
+            const { value } = this.util.buildSearch(item);
+            conditions.push({ category: { name: { contains: value.toLowerCase() } } });
+          }
+        } else {
+          const { value } = this.util.buildSearch(item);
+          if (prop === 'createdAt') {
+            obj['created'] = { is: { at: value } };
+            conditions.push(obj);
+          } else {
+            obj[prop] = value;
+            conditions.push(obj);
+          }
+        }
+      }
+    }
 
     const [products, total] = await Promise.all([
       this.prisma.products.findMany({

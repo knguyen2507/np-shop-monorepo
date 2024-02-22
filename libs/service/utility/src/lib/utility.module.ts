@@ -6,6 +6,7 @@ import { RedisModule } from '@np-shop-monorepo/service/redis';
 import * as bcrypt from 'bcrypt';
 import { ObjectId } from 'bson';
 import { Cache } from 'cache-manager';
+import moment from 'moment';
 import { environment } from './const/environment';
 import { UserInterface } from './interface/user.interface';
 import { LogType } from './type';
@@ -95,6 +96,29 @@ export class UtilityImplement {
     await this.prisma.logs.create({
       data: log,
     });
+  }
+
+  buildSearch(item: any) {
+    let value;
+    if (item.valueType === 'text') {
+      value = { contains: item.value };
+    }
+    if (item.valueType === 'number') {
+      value = Number(item.value);
+    }
+    if (item.valueType === 'date') {
+      const fromDate = moment(item.fromDate).toDate();
+      const toDate = moment(item.toDate).toDate();
+      value = { gte: fromDate, lt: toDate };
+    }
+    if (item.valueType === 'set') {
+      value = { in: Array.from(item.value) };
+    }
+    if (item.valueType === 'boolean') {
+      value = { eq: item.value };
+    }
+
+    return { value };
   }
 }
 
