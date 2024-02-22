@@ -29,22 +29,16 @@ class EnvironmentVariables {
   readonly PORT: number = Number(process.env['PORT']);
 
   @IsString()
-  readonly JWT_ACCESS_SECRET: string = process.env[
-    'JWT_ACCESS_SECRET'
-  ] as string;
+  readonly JWT_ACCESS_SECRET: string = process.env['JWT_ACCESS_SECRET'] as string;
 
   @IsNumber()
   readonly JWT_ACCESS_EXPIRE: number = Number(process.env['JWT_ACCESS_EXPIRE']);
 
   @IsString()
-  readonly JWT_REFRESH_SECRET: string = process.env[
-    'JWT_REFRESH_SECRET'
-  ] as string;
+  readonly JWT_REFRESH_SECRET: string = process.env['JWT_REFRESH_SECRET'] as string;
 
   @IsNumber()
-  readonly JWT_REFRESH_EXPIRE: number = Number(
-    process.env['JWT_REFRESH_EXPIRE']
-  );
+  readonly JWT_REFRESH_EXPIRE: number = Number(process.env['JWT_REFRESH_EXPIRE']);
 
   @IsString()
   readonly REDIS_HOST: string = process.env['REDIS_HOST'] as string;
@@ -59,31 +53,16 @@ class EnvironmentVariables {
   readonly REDIS_PASSWORD: string = process.env['REDIS_PASSWORD'] as string;
 
   @IsString()
-  readonly CLOUDINARY_CLOUDNAME: string = process.env[
-    'CLOUDINARY_CLOUDNAME'
-  ] as string;
+  readonly CLOUDINARY_CLOUDNAME: string = process.env['CLOUDINARY_CLOUDNAME'] as string;
 
   @IsString()
-  readonly CLOUDINARY_APIKEY: string = process.env[
-    'CLOUDINARY_APIKEY'
-  ] as string;
+  readonly CLOUDINARY_APIKEY: string = process.env['CLOUDINARY_APIKEY'] as string;
 
   @IsString()
-  readonly CLOUDINARY_APISECRET: string = process.env[
-    'CLOUDINARY_APISECRET'
-  ] as string;
+  readonly CLOUDINARY_APISECRET: string = process.env['CLOUDINARY_APISECRET'] as string;
 
   @IsString()
-  readonly RMQ_USER: string = process.env['RMQ_USER'] as string;
-
-  @IsString()
-  readonly RMQ_PASSWORD: string = process.env['RMQ_PASSWORD'] as string;
-
-  @IsString()
-  readonly RMQ_HOST: string = process.env['RMQ_HOST'] as string;
-
-  @IsNumber()
-  readonly RMQ_PORT: number = Number(process.env['RMQ_PORT']);
+  readonly RMQ_URL: string = process.env['RMQ_URL'] as string;
 
   constructor() {
     const error = validateSync(this);

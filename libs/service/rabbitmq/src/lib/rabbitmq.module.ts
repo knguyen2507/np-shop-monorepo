@@ -12,7 +12,7 @@ import { RMQ, environment } from '@np-shop-monorepo/service/utility';
           type: 'topic',
         },
       ],
-      uri: `amqp://${environment.RMQ_USER}:${environment.RMQ_PASSWORD}@${environment.RMQ_HOST}:${environment.RMQ_PORT}`,
+      uri: environment.RMQ_URL,
       connectionInitOptions: { wait: true },
       enableControllerDiscovery: true,
     }),
