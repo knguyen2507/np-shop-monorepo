@@ -1,0 +1,68 @@
+version: '3.9'
+
+networks:
+  gateway-network:
+    external: true
+
+services:
+  msx-shop:
+    image: msx-shop
+    restart: always
+    container_name: msx-shop
+    ports:
+      - 3020:3020
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+      - NODE_ENV=local
+      - APPNAME=store-service
+      - DATABASE_URL=mongodb://root:abc12345@store-mongodb:27017/store-services?replicaSet=rs0&authSource=admin
+      - MONGODB_URL=mongodb://root:abc12345@store-mongodb:27017/?replicaSet=rs0&authSource=admin
+      - PORT=3020
+      - JWT_ACCESS_SECRET=Jja3vG6zyvp5g6fKA49EMMFS2RSAfsz9uwkrzGxGax6Q7bmxzHedSMrDuEmXnBcJ
+      - JWT_ACCESS_EXPIRE=1
+      - JWT_REFRESH_SECRET=JPUYhfjQVjvnDgCKvDXaJJFwpVh5ERyqFLnN2Zgj3n8qRU23EVXawN9qm8VBHPxx
+      - JWT_REFRESH_EXPIRE=30
+      - REDIS_HOST=store-redis
+      - REDIS_PORT=6379
+      - REDIS_USERNAME=default
+      - REDIS_PASSWORD=abc12345
+      - CLOUDINARY_CLOUDNAME=dditi9hky
+      - CLOUDINARY_APIKEY=929887948555176
+      - CLOUDINARY_APISECRET=EVOVJ-BCbhRibM6VkCryAcXoDTQ
+      - RMQ_USER=admin
+      - RMQ_PASSWORD=abc12345
+      - RMQ_HOST=store-rabbitmq
+      - RMQ_PORT=5672
+    networks:
+      - gateway-network
+
+  msx-auth:
+    image: msx-auth
+    restart: always
+    container_name: msx-auth
+    ports:
+      - 3010:3010
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+      - NODE_ENV=local
+      - APPNAME=store-service
+      - DATABASE_URL=mongodb://root:abc12345@store-mongodb:27017/store-services?replicaSet=rs0&authSource=admin
+      - MONGODB_URL=mongodb://root:abc12345@store-mongodb:27017/?replicaSet=rs0&authSource=admin
+      - PORT=3010
+      - JWT_ACCESS_SECRET=Jja3vG6zyvp5g6fKA49EMMFS2RSAfsz9uwkrzGxGax6Q7bmxzHedSMrDuEmXnBcJ
+      - JWT_ACCESS_EXPIRE=1
+      - JWT_REFRESH_SECRET=JPUYhfjQVjvnDgCKvDXaJJFwpVh5ERyqFLnN2Zgj3n8qRU23EVXawN9qm8VBHPxx
+      - JWT_REFRESH_EXPIRE=30
+      - REDIS_HOST=store-redis
+      - REDIS_PORT=6379
+      - REDIS_USERNAME=default
+      - REDIS_PASSWORD=abc12345
+      - CLOUDINARY_CLOUDNAME=dditi9hky
+      - CLOUDINARY_APIKEY=929887948555176
+      - CLOUDINARY_APISECRET=EVOVJ-BCbhRibM6VkCryAcXoDTQ
+      - RMQ_USER=admin
+      - RMQ_PASSWORD=abc12345
+      - RMQ_HOST=store-rabbitmq
+      - RMQ_PORT=5672
+    networks:
+      - gateway-network

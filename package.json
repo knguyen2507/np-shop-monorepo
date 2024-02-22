@@ -2,7 +2,11 @@
   "name": "@np-shop-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "docker:build": "docker build -f script/docker/msx-shop.dockerfile -t msx-shop . & docker build -f script/docker/msx-auth.dockerfile -t msx-auth .",
+    "shop:docker:build": "docker build -f script/docker/msx-shop.dockerfile -t msx-shop .",
+    "auth:docker:build": "docker build -f script/docker/msx-auth.dockerfile -t msx-auth ."
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~17.0.0",

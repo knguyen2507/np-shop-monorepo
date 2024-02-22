@@ -51,6 +51,12 @@ Chạy tất cả app
 pnpm nx run-many -t serve --all
 ```
 
+Build docker image
+
+```
+pnpm docker:duild
+```
+
 ## Chạy chương trình trên Local
 
 Chạy file docker-compose.yml trong thư mục script/store-docker để tạo Docker Images
