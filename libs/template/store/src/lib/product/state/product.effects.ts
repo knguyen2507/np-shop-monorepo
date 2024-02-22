@@ -45,10 +45,13 @@ export class ProductEffects {
         ofType(ProductActions.loadProductListByAdmin),
         mergeMap((data) => {
           return this.productService
-            .findProductListByAdmin({
-              offset: data.offset,
-              limit: data.limit,
-            })
+            .findProductListByAdmin(
+              {
+                offset: data.offset,
+                limit: data.limit,
+              },
+              data.searchModel,
+            )
             .pipe(
               map((res) => {
                 return this.store.dispatch(

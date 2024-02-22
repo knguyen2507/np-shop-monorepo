@@ -48,7 +48,7 @@ pnpm nx run-many -t serve -p <appName1> <appName2> ...
 Chạy tất cả app
 
 ```
-pnpm nx run-many -t serve --all
+pnpm nx run-many -t serve --all --maxParallel=100
 ```
 
 Build docker image

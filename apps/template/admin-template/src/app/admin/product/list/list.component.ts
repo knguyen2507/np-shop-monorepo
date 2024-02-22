@@ -62,8 +62,11 @@ export class ProductListComponent implements OnInit, AfterViewInit {
       { headerName: 'Mã Sản Phẩm', field: 'productCode' },
       {
         headerName: 'Tên Sản Phẩm',
-        filter: AgGridCustomTextFilterComponent,
         field: 'name',
+        filter: AgGridCustomTextFilterComponent,
+        filterParams: {
+          valueType: 'text',
+        },
       },
       { headerName: 'Giá Sản Phẩm', field: 'price' },
       { headerName: 'Tổng Tồn Kho', field: 'qty' },
@@ -108,6 +111,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
     this.store.dispatch(
       AppStore.ProductStore.ProductActions.loadProductListByAdmin({
+        searchModel: this.searchModel ? this.searchModel : null,
         offset: this.pagi.offset ? this.pagi.offset : 0,
         limit: this.pagi.limit ? this.pagi.limit : 50,
       }),

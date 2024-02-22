@@ -23,9 +23,13 @@ export class ProductService {
     return this.httpService.get<FindMany<ProductModel>>(`${this.apiUrl}/product/find`, payload);
   }
 
-  findProductListByAdmin(pagi?: { offset: number; limit: number }) {
+  findProductListByAdmin(pagi?: { offset: number; limit: number }, searchModel?: any) {
+    if (searchModel) {
+      searchModel = JSON.stringify(searchModel);
+    }
     return this.httpService.getAdmin<FindMany<ProductModelFindByAdmin>>(`${this.apiUrl}/product/admin/find`, {
       ...pagi,
+      searchModel,
     });
   }
 

@@ -37,7 +37,7 @@ export const saveProductList = createAction(
 
 export const loadProductListByAdmin = createAction(
   LOAD_PRODUCT_LIST_BY_ADMIN_ACTION,
-  props<{ offset: number; limit: number }>(),
+  props<{ offset: number; limit: number; searchModel?: any }>(),
 );
 export const saveProductListByAdmin = createAction(
   SAVE_PRODUCT_LIST_BY_ADMIN_ACTION,
