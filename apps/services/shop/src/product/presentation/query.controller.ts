@@ -122,10 +122,12 @@ export class ProductQueryController {
   }
 
   @Get(pathPrefixQueryProduct.getShopByProduct)
-  async GetShopByProduct(@Query() query: GetShopByProductRequestDTO): Promise<any> {
+  @UseGuards(AuthnGuard, AuthoShopGuard)
+  @ApiBearerAuth()
+  async GetShopByProduct(@Query() query: GetShopByProductRequestDTO, @Req() request: RequestWithUser): Promise<any> {
     const msg = {
       messageId: this.util.generateId(),
-      data: query,
+      data: { ...query, shopIds: request.shopIds },
     };
     const product = new GetShopByProduct(msg);
     return await this.queryBus.execute(product);

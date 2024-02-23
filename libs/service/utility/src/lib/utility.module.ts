@@ -101,7 +101,7 @@ export class UtilityImplement {
   buildSearch(item: any) {
     let value;
     if (item.valueType === 'text') {
-      value = { contains: item.value };
+      value = { contains: item.value, mode: 'insensitive' };
     }
     if (item.valueType === 'number') {
       value = Number(item.value);

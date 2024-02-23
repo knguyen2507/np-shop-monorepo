@@ -65,7 +65,7 @@ export class ProductService {
   }
 
   getShopByProduct(id: string) {
-    return this.httpService.get<FindMany<ShopModel>>(`${this.apiUrl}/product/get-shop-by-product`, { id });
+    return this.httpService.getAdmin<FindMany<ShopModel>>(`${this.apiUrl}/product/get-shop-by-product`, { id });
   }
 
   findShopDetail(id: string, shopId: string) {

@@ -33,7 +33,7 @@ import {
 } from '../../application/query/product/find-similar/result';
 import { FindProductResult, FindProductResultItem } from '../../application/query/product/find/result';
 import { GetShopByProduct } from '../../application/query/product/get-shop';
-import { GetShopByProductResult, GetShopByProductResultItem } from '../../application/query/product/get-shop/result';
+import { GetShopByProductResult } from '../../application/query/product/get-shop/result';
 import { GetTotalProduct } from '../../application/query/product/get-total';
 import { GetTotalProductResult } from '../../application/query/product/get-total/result';
 import { ProductQuery } from '../../domain/query';
@@ -48,7 +48,7 @@ export class ProductQueryImplement implements ProductQuery {
     const { offset, limit, searchName } = query.data;
     const condition = [];
     if (searchName) {
-      condition.push({ name: { contains: searchName.toLowerCase() } });
+      condition.push({ name: { contains: searchName, mode: 'insensitive' } });
     }
 
     const [products, total] = await Promise.all([
@@ -97,11 +97,11 @@ export class ProductQueryImplement implements ProductQuery {
         if (item.isCustom) {
           if (prop === 'brand') {
             const { value } = this.util.buildSearch(item);
-            conditions.push({ brand: { name: { contains: value.toLowerCase() } } });
+            conditions.push({ brand: { name: value } });
           }
           if (prop === 'category') {
             const { value } = this.util.buildSearch(item);
-            conditions.push({ category: { name: { contains: value.toLowerCase() } } });
+            conditions.push({ category: { name: value } });
           }
         } else {
           const { value } = this.util.buildSearch(item);
@@ -143,7 +143,8 @@ export class ProductQueryImplement implements ProductQuery {
           category: i.category.name,
           thumbnailLink: i.thumbnailLink.url,
           qty: i.shop.reduce((accumulator, i) => {
-            return accumulator + i.qty;
+            if (shopIds.includes(i.id)) return accumulator + i.qty;
+            else return accumulator;
           }, 0),
           createdAt: i.created.at,
         },
@@ -219,17 +220,17 @@ export class ProductQueryImplement implements ProductQuery {
       where: { id: query.data.id },
     });
 
-    const items = product.shop.map((i) => {
-      return plainToClass(
-        GetShopByProductResultItem,
-        {
-          id: i.id,
-          name: i.name,
-          address: i.address,
-        },
-        { excludeExtraneousValues: true },
-      );
-    });
+    const items = [];
+
+    for (const shop of product.shop) {
+      if (query.data.shopIds.includes(shop.id)) {
+        items.push({
+          id: shop.id,
+          name: shop.name,
+          address: shop.address,
+        });
+      }
+    }
 
     return {
       items,

@@ -77,7 +77,15 @@ export class ProductListComponent implements OnInit, AfterViewInit {
           return `<img style="max-width: 60px; max-height: 60px" src="${params.value}" />`;
         },
       },
-      { headerName: 'Hãng Sản Xuất', field: 'brand' },
+      {
+        headerName: 'Hãng Sản Xuất',
+        field: 'brand',
+        filter: AgGridCustomTextFilterComponent,
+        filterParams: {
+          valueType: 'text',
+          isCustom: true,
+        },
+      },
       { headerName: 'Danh Mục', field: 'category' },
       {
         headerName: 'Thao tác',

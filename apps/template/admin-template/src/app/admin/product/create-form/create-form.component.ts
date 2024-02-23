@@ -255,7 +255,6 @@ export class ProductCreateFormComponent implements OnInit {
         shop,
       };
 
-      console.log(`data:::`, data);
       this.alertService.fireCreate(`Bạn có muốn tạo mới sản phẩm không?`);
       const sub = this.alertService.createConfirm$.subscribe((res) => {
         if (res) {
