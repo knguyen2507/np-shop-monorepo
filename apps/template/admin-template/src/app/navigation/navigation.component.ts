@@ -19,10 +19,6 @@ export class NavigationComponent {
     window.location.href = `${environment.adminHost}/quan-ly`;
   }
 
-  shop_page() {
-    window.location.href = `${environment.shopHost}/cua-hang`;
-  }
-
   redirect_page(item: string) {
     window.location.href = `${environment.adminHost}/quan-ly/${item}`;
   }

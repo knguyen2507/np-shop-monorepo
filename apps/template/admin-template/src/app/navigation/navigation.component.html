@@ -16,39 +16,19 @@
 <mat-drawer-container #navContainer>
   <mat-drawer #drawer opened="false" mode="side">
     <div class="menu-wrapper">
-      <button mat-raised-button class="redirect-shop" (click)="shop_page()">
-        <mat-icon style="color: #ffffff">home icon</mat-icon>
-        <span class="group-text">SHOP</span>
-      </button>
-      <button
-        mat-raised-button
-        class="btn-brand"
-        (click)="redirect_page(this.brand)"
-      >
+      <button mat-raised-button class="btn-brand" (click)="redirect_page(this.brand)">
         <mat-icon style="color: #ffffff">shop</mat-icon>
         <span class="group-text">Hãng sản xuất</span>
       </button>
-      <button
-        mat-raised-button
-        class="btn-category"
-        (click)="redirect_page(this.category)"
-      >
+      <button mat-raised-button class="btn-category" (click)="redirect_page(this.category)">
         <mat-icon style="color: #ffffff">bookmark</mat-icon>
         <span class="group-text">Danh mục</span>
       </button>
-      <button
-        mat-raised-button
-        class="btn-product"
-        (click)="redirect_page(this.product)"
-      >
+      <button mat-raised-button class="btn-product" (click)="redirect_page(this.product)">
         <mat-icon style="color: #ffffff">archive icon</mat-icon>
         <span class="group-text">Sản phẩm</span>
       </button>
-      <button
-        mat-raised-button
-        class="btn-user"
-        (click)="redirect_page(this.user)"
-      >
+      <button mat-raised-button class="btn-user" (click)="redirect_page(this.user)">
         <mat-icon style="color: #ffffff">people icon</mat-icon>
         <span class="group-text">Tài khoản</span>
       </button>

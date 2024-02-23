@@ -93,10 +93,6 @@ export class NavigationComponent implements OnInit {
     window.location.href = `${environment.shopHost}/cua-hang?tim-kiem=${this.dataSearch}`;
   }
 
-  admin_page() {
-    window.location.href = `${environment.adminHost}/quan-ly`;
-  }
-
   onActionClick(url: string, type: string) {
     if (type === 'brand') this.productStore.dispatch(AppStore.ProductStore.ProductActions.resetProductListByBrand());
     if (type === 'category')

@@ -49,8 +49,4 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-
-  onClick() {
-    window.location.href = `${environment.shopHost}/cua-hang`;
-  }
 }

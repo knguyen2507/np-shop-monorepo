@@ -1,0 +1,4 @@
+/msx-auth/api/* http://34.84.67.56/msx-auth/:splat 200!
+/msx-shop/api/* http://35.221.101.180/msx-shop/:splat 200!
+/quan-ly/* /index.html 200
+/dang-nhap/* /index.html 200

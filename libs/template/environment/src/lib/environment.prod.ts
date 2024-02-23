@@ -4,8 +4,7 @@ export const environment = {
   adminHost: '',
   shopHost: '',
   // urlApi: '/api',
-  urlApiAuth: '',
-  urlApiShop: '',
-  // urlApi: 'http://35.221.104.157',
+  urlApiAuth: '/msx-auth/api',
+  urlApiShop: '/msx-shop/api',
   guard: false,
 };

@@ -35,19 +35,6 @@ mat-drawer {
   .menu-wrapper {
     overflow-x: hidden;
 
-    .redirect-shop {
-      background-color: $bg;
-      width: 100%;
-      height: 56px;
-      margin-bottom: 5px;
-      margin-top: 10px;
-
-      .group-text {
-        margin-left: 10px;
-        color: #ffffff;
-      }
-    }
-
     .btn-product,
     .btn-brand,
     .btn-category,
@@ -91,8 +78,7 @@ mat-drawer {
       .nav-item-image {
         width: 24px;
         height: 24px;
-        filter: invert(57%) sepia(0%) saturate(1682%) hue-rotate(325deg)
-          brightness(99%) contrast(81%);
+        filter: invert(57%) sepia(0%) saturate(1682%) hue-rotate(325deg) brightness(99%) contrast(81%);
       }
       .nav-text {
         text-transform: capitalize;
@@ -106,8 +92,7 @@ mat-drawer {
       &:hover,
       &.active-link {
         .nav-item-image {
-          filter: invert(17%) sepia(0%) saturate(3%) hue-rotate(61deg)
-            brightness(96%) contrast(90%);
+          filter: invert(17%) sepia(0%) saturate(3%) hue-rotate(61deg) brightness(96%) contrast(90%);
         }
         .nav-text {
           font-weight: 500;
